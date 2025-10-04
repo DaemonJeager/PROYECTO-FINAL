@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="h4 m-0">Terapeutas</h1>
+  <a class="btn btn-success" href="{{ url_for('therapists_new') }}">Nuevo</a>
+</div>
+
+<div class="card">
+  <div class="card-body p-0">
+    <table class="table table-hover m-0">
+      <thead class="table-light">
+        <tr><th>Nombre</th><th>Email</th><th>Teléfono</th><th style="width:220px;"></th></tr>
+      </thead>
+      <tbody>
+      {% for u in therapists %}
+        <tr>
+          <td>{{ u.FirstName }} {{ u.LastName }}</td>
+          <td>{{ u.Email }}</td>
+          <td>{{ u.Phone or '' }}</td>
+          <td class="text-end">
+            <a class="btn btn-sm btn-secondary" href="{{ url_for('therapists_edit', uid=u.UserId) }}">Editar</a>
+            <a class="btn btn-sm btn-outline-primary" href="{{ url_for('therapist_availability', uid=u.UserId) }}">Disponibilidad</a>
+            <form action="{{ url_for('therapists_delete', uid=u.UserId) }}" method="post" class="d-inline"
+                  onsubmit="return confirm('¿Desactivar terapeuta?');">
+              <button class="btn btn-sm btn-outline-danger">Desactivar</button>
+            </form>
+          </td>
+        </tr>
+      {% else %}
+        <tr><td colspan="4" class="text-center text-muted py-4">Sin registros</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

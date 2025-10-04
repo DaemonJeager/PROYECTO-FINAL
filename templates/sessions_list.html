@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="h4 m-0">Sesiones</h1>
+  <a class="btn btn-success" href="{{ url_for('sessions_new') }}">Nueva</a>
+</div>
+<div class="card"><div class="card-body p-0">
+  <table class="table table-hover m-0">
+    <thead class="table-light">
+      <tr><th>Fecha/Hora</th><th>Duración</th><th>Terapeuta</th><th>Objetivo</th></tr>
+    </thead>
+    <tbody>
+      {% for s,u in sessions %}
+        <tr>
+          <td>{{ s.ScheduledAt.strftime("%d-%m-%Y %H:%M") }}</td>
+          <td>{{ s.DurationMin }} min</td>
+          <td>{{ u.LastName }}, {{ u.FirstName }}</td>
+          <td>{{ s.GoalSummary or '' }}</td>
+        </tr>
+      {% else %}
+        <tr><td colspan="4" class="text-center text-muted py-4">Sin sesiones</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div></div>
+{% endblock %}

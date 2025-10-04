@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="h4 mb-3">Nueva sesión</h1>
+<form method="post" class="card p-3">
+  <div class="row g-3">
+    <div class="col-md-6">
+      <label class="form-label">Terapeuta</label>
+      <select name="TherapistUserId" class="form-select" required>
+        <option value="" disabled selected>Selecciona...</option>
+        {% for t in therapists %}
+          <option value="{{ t.UserId }}">{{ t.LastName }}, {{ t.FirstName }} — {{ t.Email }}</option>
+        {% endfor %}
+      </select>
+      <input type="time" name="StartTime" class="form-control" required
+       min="09:00" max="18:00">
+
+    </div>
+    <div class="col-md-3">
+      <label class="form-label">Fecha</label>
+      <input type="date" name="Date" class="form-control" required>
+    </div>
+    <div class="col-md-3">
+      <label class="form-label">Hora inicio</label>
+      <input type="time" name="StartTime" class="form-control" required>
+    </div>
+    <div class="col-md-3">
+      <label class="form-label">Duración (min)</label>
+      <input type="number" name="DurationMin" min="15" step="15" value="60" class="form-control" required>
+    </div>
+    <div class="col-md-9">
+      <label class="form-label">Objetivo/Resumen</label>
+      <input name="GoalSummary" class="form-control" maxlength="255" placeholder="Ej: Motricidad fina - Juego de pinza">
+    </div>
+    <div class="col-12">
+      <label class="form-label">Notas</label>
+      <textarea name="Notes" rows="3" class="form-control"></textarea>
+    </div>
+  </div>
+  <div class="mt-3 d-flex gap-2">
+    <button class="btn btn-primary">Crear</button>
+    <a class="btn btn-secondary" href="{{ url_for('sessions_list') }}">Cancelar</a>
+  </div>
+</form>
+{% endblock %}
+
